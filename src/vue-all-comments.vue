@@ -76,14 +76,16 @@
         :identifier="disqus.identifier">
       </vue-disqus>
 
-      <vue-facebook-comments
-        v-if="this.active['fb']"
-        :appId="fb.appId"
-        :lang="fb.lang"
-        :url="fb.url"
-        :width="fb.width"
-        :numPosts="fb.numPosts">
-      </vue-facebook-comments>
+      <keep-alive>
+        <vue-facebook-comments
+          v-if="this.active['fb']"
+          :appId="fb.appId"
+          :lang="fb.lang"
+          :url="fb.url"
+          :width="fb.width"
+          :numPosts="fb.numPosts">
+        </vue-facebook-comments>
+      </keep-alive>
 
       <vue-gplus-comments
         v-if="this.active['gplus']"
