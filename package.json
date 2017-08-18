@@ -1,8 +1,8 @@
 {
   "name": "vue-all-comments",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Give more options to your blog users, with the most commonly used comment platforms.",
-  "main": "index.js",
+  "main": "dist/vue-all-comments.cls.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "rollup -c",
@@ -42,7 +42,8 @@
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-plugin-vue": "^2.4.1",
-    "rollup-plugin-vue2": "^0.8.0"
+    "rollup-plugin-vue2": "^0.8.0",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony-v2.8.0"
   },
   "dependencies": {
     "vue": "^2.4.2",
