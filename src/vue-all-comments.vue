@@ -1,16 +1,19 @@
 <template>
   <div class="vac">
-    <div class="vac-tab-social fullX">
+    <div 
+      class="vac-tab-social fullX"
+      :style="{ 'background-color': tabColor }">
       <nav>
         <ul class="list fullX">
           <li 
-            v-if="disqus"
-            class="item-icon">
+            v-if="disqus" 
+            class="item-icon" 
+            @click="setComment('disqus')" 
+            :class="{'-active': this.active['disqus']}"
+            :style="styleArrowTab">
             <svg 
-              @click="setComment('disqus')"
               version="1.1" 
-              class="vac-icon disqus" 
-              :class="{'-active': this.active['disqus']}"
+              class="vac-icon disqus"              
               x="0px" y="0px" 
               viewBox="0 0 512 512" 
               xml:space="preserve">
@@ -29,27 +32,35 @@
                 h28.197c36.252,0,65.748-29.505,65.748-65.762S304.009,194.936,267.757,194.936z"/>
                 <path class="fill-disqus" d="M267.757,307.67h-18.803v-93.945h18.803c25.895,0,46.959,21.074,46.959,46.973
                 S293.651,307.67,267.757,307.67z"/>
-            </svg>           
+            </svg>  
+            <span class="txt-icon" :style="{ 'color': txtColor }">DISQUS</span>         
           </li>
-          <li v-if="fb" class="item-icon">
+          <li 
+            v-if="fb" 
+            class="item-icon" 
+            @click="setComment('fb')"
+            :class="{'-active': this.active['fb']}"
+            :style="styleArrowTab">
             <svg 
-              @click="setComment('fb')"
               version="1.1"
               class="vac-icon facebook"
-              :class="{'-active': this.active['fb']}"
               x="0px" y="0px"
               viewBox="0 0 512 512"
               xml:space="preserve">
                 <path style="fill:#3b5998" d="M359.137,91.523h50.103V0.056h-91.045c-7.592-0.319-100.175-2.088-124.174,89.42 c-0.35,0.962-8.014,22.719-8.014,73.557l-83.248,
                 0.247v95.937l83.356-0.247V512h127.323V259.186h84.271v-96.183h-84.271v-30.264 C313.437,113.934,321.364,91.523,359.137,91.523z"/>
             </svg>
+            <span class="txt-icon" :style="{ 'color': txtColor }">FACEBOOK</span>         
           </li>
-          <li v-if="gplus" class="item-icon">
-            <svg 
+          <li 
+            v-if="gplus" 
+              class="item-icon" 
               @click="setComment('gplus')"
+              :class="{'-active': this.active['gplus']}"
+              :style="styleArrowTab">
+            <svg 
               version="1.1" 
-              class="vac-icon gplus"
-              :class="{'-active': this.active['gplus']}" 
+              class="vac-icon gplus"              
               x="0px" y="0px" 
               viewBox="0 0 512 512" 
               xml:space="preserve">
@@ -63,11 +74,14 @@
                   c0.616,0,0.87,0.02,0.938,0.025c2.561,0.332,4.986,0.098,7.097,0.235c13.881,9.795,24.204,18.124,30.412,24.449 c5.318,6.036,7.899,12.957,7.899,21.154C262.129,423.575,258.366,431.518,250.624,437.882z"/>
                 <polygon style="fill:#E65F58;" points="456.204,30.031 426.173,30.031 426.173,0 406.153,0 406.153,30.031 376.122,30.031 376.122,50.051 406.153,50.051 406.153,80.081 426.173,80.081 426.173,50.051 456.204,50.051 "/>
             </svg>
+            <span class="txt-icon" :style="{ 'color': txtColor }">GOOGLE PLUS</span>         
           </li>
         </ul>
       </nav>
     </div>
-    <div class="vac-frame-comment">
+    <div 
+      class="vac-frame-comment"
+      :style="{ 'background-color': boxColor }">
       <vue-disqus 
         v-if="this.active['disqus']" 
         :shortname="disqus.shortname"
@@ -110,7 +124,27 @@
       disqus: Object,
       gplus: Object,
       fb: Object,
-      showFirst: String
+      showFirst: String,
+      
+      showName: {
+        type: Boolean,
+        default: false
+      },
+
+      tabColor: {
+        type: String,
+        default: '#f5f5f5'
+      },
+
+      boxColor: {
+        type: String,
+        default: '#fff'
+      },
+
+      txtColor: {
+        type: String,
+        default: '#888'
+      }
     },
 
     data () {
@@ -120,6 +154,12 @@
           fb: false,
           gplus: false
         }
+      }
+    },
+
+    computed: {
+      styleArrowTab () {
+        return { 'border-top-color': this.tabColor }
       }
     },
 
@@ -169,25 +209,72 @@ ul {
   margin-top: 20px;
 }
 
+.vac-tab-social {
+  margin-bottom: 20px;
+}
+
+.vac-tab-social .item-icon {
+  cursor: pointer;
+  float: left;
+  position: relative;
+  padding: 12px 0 12px 15px;
+  height: 100%;
+}
+
+.vac-tab-social .item-icon.-active:after {
+  display: block;
+}
+
 .vac-tab-social .vac-icon {
   width: 22px;
-  float: left;
-  cursor: pointer;
-  opacity: 0.4;
+  float: left;  
+  opacity: 0.6;
   transition: opacity .5s
+}
+
+.vac-tab-social .item-icon:hover .vac-icon, .vac-tab-social .item-icon.-active .vac-icon {
+  opacity: 1;
+}
+
+.vac-tab-social .item-icon:after {
+  content: '';
+  border: 10px solid transparent;
+  border-top-color: inherit;
+  position: absolute;
+  left: 50%;
+  bottom: -20px;
+  transform: translateX(-50%);
+  display: none;
 }
 
 .vac-icon .fill-disqus {
   fill: #2e9fff;
 }
 
-
-.vac-tab-social .vac-icon:hover, .vac-tab-social .vac-icon.-active {
-  opacity: 1;
-}
-
-.item-icon:not(:last-child) {
+.vac-tab-social .txt-icon {
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: bold;
   float: left;
-  margin-right: 10px;
+  margin-top: 4px;
+  margin-left: 8px;
+  color: #888;
+  letter-spacing: .7px;
 }
+
+.vac-tab-social .item-icon:not(:last-child) .txt-icon:after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  float: right;
+  background-color: #ccc;
+  margin-left: 20px;
+  margin-top: -3px;
+}
+
+.vac-frame-comment {
+  width: calc(100% - 40px);
+  padding: 20px;
+}
+
 </style>
