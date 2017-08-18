@@ -2,7 +2,7 @@
   <div class="vac">
     <div 
       class="vac-tab-social fullX"
-      :style="{ 'background-color': tabColor }">
+      :style="styleTab">
       <nav>
         <ul class="list fullX">
           <li 
@@ -33,7 +33,7 @@
                 <path class="fill-disqus" d="M267.757,307.67h-18.803v-93.945h18.803c25.895,0,46.959,21.074,46.959,46.973
                 S293.651,307.67,267.757,307.67z"/>
             </svg>  
-            <span class="txt-icon" :style="{ 'color': txtColor }">DISQUS</span>         
+            <span class="txt-icon" v-if="showName" :style="{ 'color': txtColor }">DISQUS</span>         
           </li>
           <li 
             v-if="fb" 
@@ -50,7 +50,7 @@
                 <path style="fill:#3b5998" d="M359.137,91.523h50.103V0.056h-91.045c-7.592-0.319-100.175-2.088-124.174,89.42 c-0.35,0.962-8.014,22.719-8.014,73.557l-83.248,
                 0.247v95.937l83.356-0.247V512h127.323V259.186h84.271v-96.183h-84.271v-30.264 C313.437,113.934,321.364,91.523,359.137,91.523z"/>
             </svg>
-            <span class="txt-icon" :style="{ 'color': txtColor }">FACEBOOK</span>         
+            <span class="txt-icon" v-if="showName" :style="{ 'color': txtColor }">FACEBOOK</span>         
           </li>
           <li 
             v-if="gplus" 
@@ -74,14 +74,14 @@
                   c0.616,0,0.87,0.02,0.938,0.025c2.561,0.332,4.986,0.098,7.097,0.235c13.881,9.795,24.204,18.124,30.412,24.449 c5.318,6.036,7.899,12.957,7.899,21.154C262.129,423.575,258.366,431.518,250.624,437.882z"/>
                 <polygon style="fill:#E65F58;" points="456.204,30.031 426.173,30.031 426.173,0 406.153,0 406.153,30.031 376.122,30.031 376.122,50.051 406.153,50.051 406.153,80.081 426.173,80.081 426.173,50.051 456.204,50.051 "/>
             </svg>
-            <span class="txt-icon" :style="{ 'color': txtColor }">GOOGLE PLUS</span>         
+            <span class="txt-icon" v-if="showName" :style="{ 'color': txtColor }">GOOGLE PLUS</span>         
           </li>
         </ul>
       </nav>
     </div>
     <div 
       class="vac-frame-comment"
-      :style="{ 'background-color': boxColor }">
+      :style="styleFrameComment">
       <vue-disqus 
         v-if="this.active['disqus']" 
         :shortname="disqus.shortname"
@@ -136,9 +136,14 @@
         default: '#f5f5f5'
       },
 
+      tabColorBorder: {
+        type: String,
+        default: '#ddd'
+      },
+
       boxColor: {
         type: String,
-        default: '#fff'
+        default: ''
       },
 
       txtColor: {
@@ -158,8 +163,23 @@
     },
 
     computed: {
+      styleTab () {
+        return { 
+          'background-color': this.tabColor,
+          'border-bottom-color': this.tabColorBorder
+        }  
+      },
+
       styleArrowTab () {
-        return { 'border-top-color': this.tabColor }
+        return { 'border-top-color': this.tabColorBorder }
+      },
+
+      styleFrameComment () {
+        return {
+          'background-color': this.boxColor,
+          'padding': this.boxColor ? '20px' : 'none',
+          'width': this.boxColor ? 'calc(100% - 40px)' : '100%'
+        }
       }
     },
 
@@ -211,6 +231,7 @@ ul {
 
 .vac-tab-social {
   margin-bottom: 20px;
+  border-bottom: 3px solid transparent;
 }
 
 .vac-tab-social .item-icon {
@@ -221,7 +242,7 @@ ul {
   height: 100%;
 }
 
-.vac-tab-social .item-icon.-active:after {
+.vac-tab-social .item-icon.-active:before {
   display: block;
 }
 
@@ -229,6 +250,7 @@ ul {
   width: 22px;
   float: left;  
   opacity: 0.6;
+  margin-right: 8px;
   transition: opacity .5s
 }
 
@@ -236,12 +258,12 @@ ul {
   opacity: 1;
 }
 
-.vac-tab-social .item-icon:after {
+.vac-tab-social .item-icon:before {
   content: '';
   border: 10px solid transparent;
   border-top-color: inherit;
   position: absolute;
-  left: 50%;
+  left: 55%;
   bottom: -20px;
   transform: translateX(-50%);
   display: none;
@@ -257,7 +279,6 @@ ul {
   font-weight: bold;
   float: left;
   margin-top: 4px;
-  margin-left: 8px;
   color: #888;
   letter-spacing: .7px;
 }
@@ -267,14 +288,8 @@ ul {
   width: 1px;
   height: 20px;
   float: right;
-  background-color: #ccc;
+  background-color: #ddd;
   margin-left: 20px;
   margin-top: -3px;
 }
-
-.vac-frame-comment {
-  width: calc(100% - 40px);
-  padding: 20px;
-}
-
 </style>
