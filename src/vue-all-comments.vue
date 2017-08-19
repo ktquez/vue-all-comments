@@ -82,13 +82,16 @@
     <div 
       class="vac-frame-comment"
       :style="styleFrameComment">
-      <vue-disqus 
-        v-if="this.active['disqus']" 
-        :shortname="disqus.shortname"
-        :title="disqus.title"
-        :url="disqus.url"
-        :identifier="disqus.identifier">
-      </vue-disqus>
+
+      <keep-alive>
+        <vue-disqus 
+          v-if="this.active['disqus']" 
+          :shortname="disqus.shortname"
+          :title="disqus.title"
+          :url="disqus.url"
+          :identifier="disqus.identifier">
+        </vue-disqus>
+      </keep-alive>
 
       <keep-alive>
         <vue-facebook-comments
@@ -101,13 +104,15 @@
         </vue-facebook-comments>
       </keep-alive>
 
-      <vue-gplus-comments
-        v-if="this.active['gplus']"
-        :url="gplus.url"
-        :width="gplus.width"
-        :firstParty="gplus.firstParty"
-        :viewType="gplus.viewType">
-      </vue-gplus-comments>      
+      <keep-alive>
+        <vue-gplus-comments
+          v-if="this.active['gplus']"
+          :url="gplus.url"
+          :width="gplus.width"
+          :firstParty="gplus.firstParty"
+          :viewType="gplus.viewType">
+        </vue-gplus-comments>  
+      </keep-alive>    
     </div>
   </div>
 </template>

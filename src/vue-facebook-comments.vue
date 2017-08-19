@@ -1,7 +1,7 @@
 <template>
   <div>
+    <div class="fb-comments" :data-href="currentUrl" :data-width="width" :data-numposts="numPosts"></div>
     <div id="fb-root"></div>
-    <div class="fb-comments" :data-href="url" :data-width="width" :data-numposts="numPosts"></div>
   </div>
 </template>
 
@@ -44,14 +44,20 @@
       this.init()
     },
 
+    computed: {
+      currentUrl () {
+        return (this.url || window.location.href)
+      }
+    },
+
     methods: {
       reset () {
-        window.fbAsyncInit()
+        window.FB.XFBML.parse()
       },
 
       init () {
         let src = `//connect.facebook.net/${this.lang}/sdk.js`
-        let appId = this.appId        ;
+        let appId = this.appId
 
         setTimeout(function() {
           window.fbAsyncInit = function() {
