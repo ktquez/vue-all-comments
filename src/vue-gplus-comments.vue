@@ -46,7 +46,7 @@
             first_party_property: this.firstParty,
             view_type: this.viewType
           })
-        }, 1000)
+        }, 1200)
       }
     }
   }
